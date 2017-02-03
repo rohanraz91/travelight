@@ -1,0 +1,50 @@
+{
+  "project_info": {
+    "project_number": "902677684141",
+    "firebase_url": "https://travelight-15215.firebaseio.com",
+    "project_id": "travelight-15215",
+    "storage_bucket": "travelight-15215.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:902677684141:android:56d0da7dec4d04d4",
+        "android_client_info": {
+          "package_name": "com.example.razdanr.myapplication"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "902677684141-hpt6am7m6rtmfngp3qqit9cc4sfthmum.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBq76JNKkYX1yXAVLYRSW5TJ7KaQPBONqU"
+        },
+        {
+          "current_key": "AIzaSyA9yUV_yT3KrtwEgPWgm0mtHqB65V5tYAE"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "902677684141-hpt6am7m6rtmfngp3qqit9cc4sfthmum.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

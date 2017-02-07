@@ -18,7 +18,9 @@
         android:layout_marginTop="15dp"
         android:id="@+id/tvWelcome"
         android:layout_alignParentStart="true"
-        android:layout_alignParentEnd="true" />
+        android:layout_alignParentEnd="true"
+        android:textSize="45sp"
+        android:textAlignment="center" />
 
     <TextView
         android:layout_width="wrap_content"
@@ -29,7 +31,7 @@
         android:layout_alignParentStart="true" />
 
     <Button
-        android:text="GetTheFOut"
+        android:text="Logout"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/tvName"
@@ -37,6 +39,8 @@
         android:id="@+id/bLogout"
         android:layout_alignParentEnd="true"
         android:layout_alignParentStart="true"
-        android:textAllCaps="false" />
+        android:textAllCaps="false"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
 </RelativeLayout>

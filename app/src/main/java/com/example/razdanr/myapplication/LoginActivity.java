@@ -1,10 +1,12 @@
 package com.example.razdanr.myapplication;
 
+import android.app.ProgressDialog;
 import android.content.Intent;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -33,7 +35,7 @@ public class LoginActivity extends AppCompatActivity {
         etUserName = (EditText) findViewById((R.id.etUserName));
         etPassword = (EditText) findViewById((R.id.etPassword));
         final Button bLogin = (Button) findViewById((R.id.bLogin));
-        //final TextView tvRegister = (TextView) findViewById((R.id.tvRegister));
+        final TextView tvRegister = (TextView) findViewById((R.id.tvRegister));
         mAuth = FirebaseAuth.getInstance();
         mAuthListner = new FirebaseAuth.AuthStateListener() {
             @Override
@@ -44,13 +46,13 @@ public class LoginActivity extends AppCompatActivity {
                 }
             }
         };
-        /*tvRegister.setOnClickListener(new View.OnClickListener() {
+        tvRegister.setOnClickListener(new View.OnClickListener() {
            @Override
             public void onClick(View v){
                Intent registerIntent = new Intent(LoginActivity.this, RegisterActivity.class);
                LoginActivity.this.startActivity(registerIntent);
            }
-        });*/
+        });
 
         bLogin.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,6 +62,7 @@ public class LoginActivity extends AppCompatActivity {
             }
         });
     }
+
     @Override
     protected void onStart(){
         super.onStart();
@@ -70,15 +73,19 @@ public class LoginActivity extends AppCompatActivity {
     private void signIn(){
         String email= etUserName.getText().toString();
         String password= etPassword.getText().toString();
+
         //check if user has not left the Uname and Pass field Blanc
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
             Toast.makeText(LoginActivity.this, "Email/ Password Field Empty", Toast.LENGTH_LONG).show();
         }
         else{
+            final ProgressDialog progressDialog = ProgressDialog.show(LoginActivity.this, "Please wait...","Processing...",true);
             mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                 @Override
                 public void onComplete(@NonNull Task<AuthResult> task) {
+                   // progressDialog.dismiss();
                     if (!task.isSuccessful()) {
+                        Log.e("ERROR", task.getException().toString());
                         Toast.makeText(LoginActivity.this, "SignIn Error", Toast.LENGTH_LONG).show();
                     }
                 }

@@ -105,7 +105,6 @@ public class RegisterActivity extends AppCompatActivity {
 
                 });
                 flag++;
-                break;
             }
         }
         if(flag==0)

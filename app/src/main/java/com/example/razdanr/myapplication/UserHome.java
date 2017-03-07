@@ -128,7 +128,17 @@ public class UserHome extends AppCompatActivity {
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     final BluetoothDevice device = (BluetoothDevice) parent.getItemAtPosition(position);
+                    if (device == null) return;
+                    final Intent intent = new Intent(UserHome.this, DeviceControlActivity.class);
+                    intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
+                    intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+                    /*if (mScanning) {
 
+                        mBluetoothAdapter.stopLeScan(scanCallback);
+                        mScanning = false;
+                    }*/
+                    startActivity(intent);
+                    /*
                     String msg = device.getAddress() + "\n"
                             + device.getBluetoothClass().toString() + "\n"
                             + getBTDevieType(device);
@@ -143,7 +153,7 @@ public class UserHome extends AppCompatActivity {
                                 }
                             })
                             .show();
-
+*/
                 }
             };
     private String getBTDevieType(BluetoothDevice d){
@@ -278,4 +288,5 @@ public class UserHome extends AppCompatActivity {
             }
         }
     };
+
 }

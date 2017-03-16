@@ -17,7 +17,6 @@
 package com.example.razdanr.myapplication;
 
 import android.app.Activity;
-import android.bluetooth.BluetoothGatt;
 import android.bluetooth.BluetoothGattCharacteristic;
 import android.bluetooth.BluetoothGattService;
 import android.content.BroadcastReceiver;
@@ -42,7 +41,6 @@ import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * For a given BLE device, this Activity provides the user interface to connect, display data,
@@ -50,8 +48,8 @@ import java.util.UUID;
  * communicates with {@code BluetoothLeService}, which in turn interacts with the
  * Bluetooth LE API.
  */
-public class DeviceControlActivity extends Activity {
-    private final static String TAG = DeviceControlActivity.class.getSimpleName();
+public class ControlBLEActivity extends Activity {
+    private final static String TAG = ControlBLEActivity.class.getSimpleName();
 
     public static final String EXTRAS_DEVICE_NAME = "DEVICE_NAME";
     public static final String EXTRAS_DEVICE_ADDRESS = "DEVICE_ADDRESS";

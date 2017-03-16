@@ -1,6 +1,5 @@
 package com.example.razdanr.myapplication;
 
-import android.app.ListActivity;
 import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothManager;
 import android.content.Context;
@@ -9,26 +8,15 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
-import android.widget.TextView;
 import android.app.Activity;
-import android.app.AlertDialog;
-import android.bluetooth.BluetoothAdapter;
 import android.bluetooth.BluetoothDevice;
-import android.bluetooth.BluetoothManager;
 import android.bluetooth.le.BluetoothLeScanner;
 import android.bluetooth.le.ScanCallback;
 import android.bluetooth.le.ScanResult;
-import android.content.Context;
-import android.content.DialogInterface;
-import android.content.Intent;
 import android.content.pm.PackageManager;
-import android.os.Bundle;
 import android.os.Handler;
-import android.support.v7.app.AppCompatActivity;
-import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.ListAdapter;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -129,9 +117,9 @@ public class UserHome extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     final BluetoothDevice device = (BluetoothDevice) parent.getItemAtPosition(position);
                     if (device == null) return;
-                    final Intent intent = new Intent(UserHome.this, DeviceControlActivity.class);
-                    intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_NAME, device.getName());
-                    intent.putExtra(DeviceControlActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
+                    final Intent intent = new Intent(UserHome.this, ControlBLEActivity.class);
+                    intent.putExtra(ControlBLEActivity.EXTRAS_DEVICE_NAME, device.getName());
+                    intent.putExtra(ControlBLEActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
                     /*if (mScanning) {
 
                         mBluetoothAdapter.stopLeScan(scanCallback);

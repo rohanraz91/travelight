@@ -35,10 +35,11 @@ public class BluetoothLEService extends Service {
     private String mBluetoothDeviceAddress;
     private BluetoothGatt mBluetoothGatt;
     private int mConnectionState = STATE_DISCONNECTED;
-
     private static final int STATE_DISCONNECTED = 0;
     private static final int STATE_CONNECTING = 1;
     private static final int STATE_CONNECTED = 2;
+
+
 
     public final static String ACTION_GATT_CONNECTED =
             "com.example.bluetooth.le.ACTION_GATT_CONNECTED";
@@ -84,6 +85,7 @@ public class BluetoothLEService extends Service {
             } else {
                 Log.w(TAG, "onServicesDiscovered received: " + status);
             }
+
         }
 
         @Override
@@ -303,5 +305,9 @@ public class BluetoothLEService extends Service {
         if (mBluetoothGatt == null) return null;
 
         return mBluetoothGatt.getServices();
+    }
+    //To write on the BLE device
+    public void writeCharacteristic(BluetoothGattCharacteristic characteristic) {
+        mBluetoothGatt.writeCharacteristic(characteristic);
     }
 }

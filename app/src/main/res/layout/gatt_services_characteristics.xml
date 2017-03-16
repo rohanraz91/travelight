@@ -3,7 +3,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:layout_margin="10dp">
+    android:layout_margin="10dp"
+    android:weightSum="1">
+
     <LinearLayout android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -56,5 +58,21 @@
 
     <ExpandableListView android:id="@+id/gatt_services_list"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
+        android:layout_height="224dp"
+        android:layout_weight="0.40" />
+
+    <EditText
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:inputType="textPersonName"
+        android:ems="10"
+        android:id="@+id/etCommand"
+        android:hint="Command" />
+
+    <Button
+        android:text="Command"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/bCommand" />
+
 </LinearLayout>

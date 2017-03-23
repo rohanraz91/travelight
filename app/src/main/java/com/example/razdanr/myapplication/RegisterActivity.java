@@ -40,7 +40,7 @@ public class RegisterActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_register);
 
-        /*Variable declaration for layout items */
+        //Variable declaration for UI items.
         etUserName = (EditText) findViewById((R.id.etUserName));
         etPassword = (EditText) findViewById((R.id.etPassword));
         etSuitcaseID = (EditText) findViewById((R.id.etSuitcaseID));
@@ -102,7 +102,6 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(RegisterActivity.this, "Register Error", Toast.LENGTH_LONG).show();
                         }
                     }
-
                 });
                 flag++;
             }

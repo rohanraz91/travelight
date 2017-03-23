@@ -30,16 +30,16 @@ import com.google.firebase.auth.FirebaseUser;
 
 public class UserHome extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
-    private BluetoothAdapter mBluetoothAdapter;
-    private BluetoothLeScanner mBluetoothLeScanner;
-    private boolean mScanning;
+    private BluetoothAdapter bluetoothAdapter;
+    private BluetoothLeScanner bluetoothLeScanner;
+    private boolean scanning;
 
     private static final int RQS_ENABLE_BLUETOOTH = 1;
     Button bScan;
     ListView listView;
     List<BluetoothDevice> listBluetoothDevice;
     ListAdapter adapterLeScanResult;
-    private Handler mHandler;
+    private Handler handler;
     private static final long SCAN_PERIOD = 10000;
 
     @Override
@@ -56,7 +56,7 @@ public class UserHome extends AppCompatActivity {
         }
         getBluetoothAdapterAndLeScanner();
         // Checks if Bluetooth is supported on the device.
-        if (mBluetoothAdapter == null) {
+        if (bluetoothAdapter == null) {
             Toast.makeText(this,
                     "bluetoothManager.getAdapter()==null",
                     Toast.LENGTH_SHORT).show();
@@ -80,27 +80,25 @@ public class UserHome extends AppCompatActivity {
         listView.setAdapter(adapterLeScanResult);
         listView.setOnItemClickListener(scanResultOnItemClickListener);
 
-        mHandler = new Handler();
+        handler = new Handler();
 
         final Button bLogout = (Button) findViewById((R.id.bLogout));
 
 
-        final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
+        //final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         firebaseAuth = FirebaseAuth.getInstance();
 
-        //If the user has logged out then it will redirect to login Page
+        //If the user has logged out then it will redirect to login Page.
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
             startActivity(new Intent(UserHome.this, LoginActivity.class));
         }
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
-        // Logout button tapped
+        // Logout button tapped.
         bLogout.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //Intent loginIntent = new Intent(UserHome.this, LoginActivity.class);
-                //  UserHome.this.startActivity(loginIntent);
                 firebaseAuth.signOut();
                 finish();
                 startActivity(new Intent(UserHome.this, LoginActivity.class));
@@ -120,28 +118,7 @@ public class UserHome extends AppCompatActivity {
                     final Intent intent = new Intent(UserHome.this, ControlBLEActivity.class);
                     intent.putExtra(ControlBLEActivity.EXTRAS_DEVICE_NAME, device.getName());
                     intent.putExtra(ControlBLEActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
-                    /*if (mScanning) {
-
-                        mBluetoothAdapter.stopLeScan(scanCallback);
-                        mScanning = false;
-                    }*/
                     startActivity(intent);
-                    /*
-                    String msg = device.getAddress() + "\n"
-                            + device.getBluetoothClass().toString() + "\n"
-                            + getBTDevieType(device);
-
-                    new AlertDialog.Builder(UserHome.this)
-                            .setTitle(device.getName())
-                            .setMessage(msg)
-                            .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                                @Override
-                                public void onClick(DialogInterface dialog, int which) {
-
-                                }
-                            })
-                            .show();
-*/
                 }
             };
     private String getBTDevieType(BluetoothDevice d){
@@ -170,8 +147,8 @@ public class UserHome extends AppCompatActivity {
     protected void onResume() {
         super.onResume();
 
-        if (!mBluetoothAdapter.isEnabled()) {
-            if (!mBluetoothAdapter.isEnabled()) {
+        if (!bluetoothAdapter.isEnabled()) {
+            if (!bluetoothAdapter.isEnabled()) {
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, RQS_ENABLE_BLUETOOTH);
             }
@@ -188,7 +165,7 @@ public class UserHome extends AppCompatActivity {
         getBluetoothAdapterAndLeScanner();
 
         // Checks if Bluetooth is supported on the device.
-        if (mBluetoothAdapter == null) {
+        if (bluetoothAdapter == null) {
             Toast.makeText(this,
                     "bluetoothManager.getAdapter()==null",
                     Toast.LENGTH_SHORT).show();
@@ -203,44 +180,40 @@ public class UserHome extends AppCompatActivity {
         // Get BluetoothAdapter and BluetoothLeScanner.
         final BluetoothManager bluetoothManager =
                 (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
-        mBluetoothAdapter = bluetoothManager.getAdapter();
-        mBluetoothLeScanner = mBluetoothAdapter.getBluetoothLeScanner();
+        bluetoothAdapter = bluetoothManager.getAdapter();
+        bluetoothLeScanner = bluetoothAdapter.getBluetoothLeScanner();
 
-        mScanning = false;
+        scanning = false;
     }
 
-    /*
-    to call startScan (ScanCallback callback),
-    Requires BLUETOOTH_ADMIN permission.
-    Must hold ACCESS_COARSE_LOCATION or ACCESS_FINE_LOCATION permission to get results.
-     */
+    // Bluetooth admin permission required to start scan.
     private void scanLeDevice(final boolean enable) {
         if (enable) {
             listBluetoothDevice.clear();
             listView.invalidateViews();
 
-            // Stops scanning after a pre-defined scan period.
-            mHandler.postDelayed(new Runnable() {
+            // Stops scanning after given scan period.
+            handler.postDelayed(new Runnable() {
                 @Override
                 public void run() {
-                    mBluetoothLeScanner.stopScan(scanCallback);
+                    bluetoothLeScanner.stopScan(scanCallback);
                     listView.invalidateViews();
 
                     Toast.makeText(UserHome.this,
                             "Scan timeout",
                             Toast.LENGTH_LONG).show();
 
-                    mScanning = false;
+                    scanning = false;
                     bScan.setEnabled(true);
                 }
             }, SCAN_PERIOD);
 
-            mBluetoothLeScanner.startScan(scanCallback);
-            mScanning = true;
+            bluetoothLeScanner.startScan(scanCallback);
+            scanning = true;
             bScan.setEnabled(false);
         } else {
-            mBluetoothLeScanner.stopScan(scanCallback);
-            mScanning = false;
+            bluetoothLeScanner.stopScan(scanCallback);
+            scanning = false;
             bScan.setEnabled(true);
         }
     }

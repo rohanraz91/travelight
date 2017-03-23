@@ -29,7 +29,7 @@ public class LoginActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
 
-        /*Variable declaration for layout items */
+        //Variable declaration for UI items.
         etUserName = (EditText) findViewById((R.id.etUserName));
         etPassword = (EditText) findViewById((R.id.etPassword));
         final Button bLogin = (Button) findViewById((R.id.bLogin));

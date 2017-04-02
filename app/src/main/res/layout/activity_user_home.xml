@@ -24,14 +24,16 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center_horizontal"
         android:autoLink="web"
-        android:text="Bluetooth LE Gatt"
+        android:text="Bluetooth LE Devices"
         android:textStyle="italic" />
 
     <Button
-        android:id="@+id/scan"
+        android:id="@+id/bScan"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Scan"/>
+        android:text="Scan"
+        android:background="@color/colorPrimary"
+        android:textColor="@color/common_google_signin_btn_text_dark_default" />
 
     <ListView
         android:id="@+id/lelist"

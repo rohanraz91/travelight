@@ -19,10 +19,6 @@ import android.util.Log;
 import java.util.List;
 import java.util.UUID;
 
-/**
- * Created by razdanr on 23/02/2017.
- */
-
 
 //connection and  communication with a GATT server hosted on Bluetooth LE device.
 
@@ -56,7 +52,7 @@ public class BluetoothLEService extends Service {
             UUID.fromString(GattAttributes.HEART_RATE_MEASUREMENT);
 
     // For connection change and services discovered.
-    private final BluetoothGattCallback mGattCallback = new BluetoothGattCallback() {
+    private final BluetoothGattCallback gattCallback = new BluetoothGattCallback() {
         @Override
         public void onConnectionStateChange(BluetoothGatt gatt, int status, int newState) {
             String intentAction;
@@ -64,9 +60,10 @@ public class BluetoothLEService extends Service {
                 intentAction = ACTION_GATT_CONNECTED;
                 mConnectionState = STATE_CONNECTED;
                 broadcastUpdate(intentAction);
+                //LOG Information
                 Log.i(TAG, "Connected to GATT server.");
                 // Attempts to discover services once connected.
-                Log.i(TAG, "Attempting to start service discovery:" +
+                Log.i(TAG, "Try to start service discovery for BLE devices:" +
                         bluetoothGatt.discoverServices());
             } else if (newState == BluetoothProfile.STATE_DISCONNECTED) {
                 intentAction = ACTION_GATT_DISCONNECTED;
@@ -206,7 +203,7 @@ public class BluetoothLEService extends Service {
         }
         //Auto connect set as fault to connect to device directly.
 
-        bluetoothGatt = device.connectGatt(this, false, mGattCallback);
+        bluetoothGatt = device.connectGatt(this, false, gattCallback);
         Log.d(TAG, "Trying to create a new connection.");
         bluetoothDeviceAddress = address;
         mConnectionState = STATE_CONNECTING;

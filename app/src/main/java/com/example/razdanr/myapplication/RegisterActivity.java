@@ -34,7 +34,7 @@ public class RegisterActivity extends AppCompatActivity {
     private EditText etSuitcaseID;
     private FirebaseDatabase database;
     final ArrayList<String> array = new ArrayList<String>();
-
+    private final static String TAG = RegisterActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,9 +46,7 @@ public class RegisterActivity extends AppCompatActivity {
         etSuitcaseID = (EditText) findViewById((R.id.etSuitcaseID));
         final Button bRegister = (Button) findViewById((R.id.bRegister));
         final TextView tvLogin = (TextView) findViewById((R.id.tvLogin));
-
         firebaseAuth= FirebaseAuth.getInstance();
-
 
         database = FirebaseDatabase.getInstance();
         DatabaseReference databaseReference = database.getReference();
@@ -57,7 +55,7 @@ public class RegisterActivity extends AppCompatActivity {
             public void onDataChange(DataSnapshot dataSnapshot) {
                 //get all of the children at this level
                 final Iterable<DataSnapshot> children = dataSnapshot.getChildren();
-
+                Log.i(TAG,"Getting all registered suitcase IDs from the database");
                 for (DataSnapshot child: children)
                 {
                     array.add(child.getValue().toString());
@@ -66,7 +64,7 @@ public class RegisterActivity extends AppCompatActivity {
 
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                //Default method to be overriden. Not required in out case.
             }
         });
 
@@ -92,23 +90,35 @@ public class RegisterActivity extends AppCompatActivity {
         String password= etPassword.getText().toString();
         for(int i = 0; i< array.size();i++) {
             if (array.get(i).toString().equals(etSuitcaseID.getText().toString())) {
-
+                registerChecker(email,password,array.get(i).toString());
                 firebaseAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
                             Toast.makeText(RegisterActivity.this, "Register Successfully", Toast.LENGTH_LONG).show();
+                            Log.i(TAG,"Registration Successful");
                         } else {
                             Toast.makeText(RegisterActivity.this, "Register Error", Toast.LENGTH_LONG).show();
+                            Log.i(TAG,"Registration Error");
                         }
                     }
                 });
                 flag++;
+                break;
             }
+            Log.w(TAG,"Not an authentic user.");
         }
         if(flag==0)
         {
             Toast.makeText(RegisterActivity.this, "Register Error", Toast.LENGTH_LONG).show();
         }
+    }
+
+    protected boolean registerChecker(String e,String p,String id){
+        String email=e;
+        String password=p;
+        String suitID=id;
+
+        return !(suitID.isEmpty() || password.isEmpty() || email.isEmpty());
     }
 }

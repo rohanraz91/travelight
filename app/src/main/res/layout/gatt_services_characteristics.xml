@@ -71,8 +71,10 @@
 
     <Button
         android:text="Command"
-        android:layout_width="match_parent"
+        android:layout_width="130dp"
         android:layout_height="wrap_content"
-        android:id="@+id/bCommand" />
+        android:id="@+id/bCommand"
+        android:background="@android:color/holo_blue_light"
+        android:textColor="@android:color/background_light" />
 
 </LinearLayout>

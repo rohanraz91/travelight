@@ -6,6 +6,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.app.Activity;
@@ -41,12 +42,12 @@ public class UserHome extends AppCompatActivity {
     ListAdapter adapterLeScanResult;
     private Handler handler;
     private static final long SCAN_PERIOD = 10000;
-
+    private final static String TAG = UserHome.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_user_home);
-
+        Log.i(TAG,"User is authenticated and can login.");
         // Check if BLE is supported on the device.
         if (!getPackageManager().hasSystemFeature(PackageManager.FEATURE_BLUETOOTH_LE)) {
             Toast.makeText(this,
@@ -55,7 +56,7 @@ public class UserHome extends AppCompatActivity {
             finish();
         }
         getBluetoothAdapterAndLeScanner();
-        // Checks if Bluetooth is supported on the device.
+        // Checks if Bluetooth Adapter is received.
         if (bluetoothAdapter == null) {
             Toast.makeText(this,
                     "bluetoothManager.getAdapter()==null",
@@ -64,7 +65,7 @@ public class UserHome extends AppCompatActivity {
             return;
         }
 
-        bScan = (Button)findViewById(R.id.scan);
+        bScan = (Button)findViewById(R.id.bScan);
         bScan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -108,6 +109,8 @@ public class UserHome extends AppCompatActivity {
 
 
     }
+
+    //When an item from the list is clicked
     AdapterView.OnItemClickListener scanResultOnItemClickListener =
             new AdapterView.OnItemClickListener(){
 
@@ -116,11 +119,15 @@ public class UserHome extends AppCompatActivity {
                     final BluetoothDevice device = (BluetoothDevice) parent.getItemAtPosition(position);
                     if (device == null) return;
                     final Intent intent = new Intent(UserHome.this, ControlBLEActivity.class);
+
+                    //send device bame and address to ControlBLEActivity
                     intent.putExtra(ControlBLEActivity.EXTRAS_DEVICE_NAME, device.getName());
                     intent.putExtra(ControlBLEActivity.EXTRAS_DEVICE_ADDRESS, device.getAddress());
                     startActivity(intent);
                 }
             };
+
+    //check usage!!
     private String getBTDevieType(BluetoothDevice d){
         String type = "";
 
@@ -149,11 +156,14 @@ public class UserHome extends AppCompatActivity {
 
         if (!bluetoothAdapter.isEnabled()) {
             if (!bluetoothAdapter.isEnabled()) {
+                Log.w(TAG,"Adapter needs to be turned on to discover the BLE devices");
                 Intent enableBtIntent = new Intent(BluetoothAdapter.ACTION_REQUEST_ENABLE);
                 startActivityForResult(enableBtIntent, RQS_ENABLE_BLUETOOTH);
             }
         }
     }
+
+    //check usage!!
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -218,12 +228,14 @@ public class UserHome extends AppCompatActivity {
         }
     }
 
+    //Decisions on scanCallback
     private ScanCallback scanCallback = new ScanCallback() {
         @Override
         public void onScanResult(int callbackType, ScanResult result) {
             super.onScanResult(callbackType, result);
-
+            //add item to list on callback
             addBluetoothDevice(result.getDevice());
+            Log.i(TAG, "Since discovery is a async process so callBack method required");
         }
 
         @Override
@@ -235,13 +247,16 @@ public class UserHome extends AppCompatActivity {
         }
 
         @Override
+        //throw error if scan failed
         public void onScanFailed(int errorCode) {
             super.onScanFailed(errorCode);
+            Log.e("ERROR", errorCode+"-has occured");
             Toast.makeText(UserHome.this,
                     "onScanFailed: " + String.valueOf(errorCode),
                     Toast.LENGTH_LONG).show();
         }
 
+        //Add scanned items to listview @refactored
         private void addBluetoothDevice(BluetoothDevice device){
             if(!listBluetoothDevice.contains(device)){
                 listBluetoothDevice.add(device);

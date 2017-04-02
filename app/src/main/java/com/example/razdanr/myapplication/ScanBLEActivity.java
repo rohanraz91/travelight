@@ -1,3 +1,4 @@
+/*
 package com.example.razdanr.myapplication;
 
 
@@ -248,4 +249,4 @@ public class ScanBLEActivity extends ListActivity {
         TextView deviceName;
         TextView deviceAddress;
     }
-}
+}*/

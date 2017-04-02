@@ -24,6 +24,7 @@ public class LoginActivity extends AppCompatActivity {
     private EditText etUserName;
     private EditText etPassword;
     private FirebaseAuth.AuthStateListener mAuthListner;
+    private final static String TAG = LoginActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,6 +33,7 @@ public class LoginActivity extends AppCompatActivity {
         //Variable declaration for UI items.
         etUserName = (EditText) findViewById((R.id.etUserName));
         etPassword = (EditText) findViewById((R.id.etPassword));
+
         final Button bLogin = (Button) findViewById((R.id.bLogin));
         final TextView tvRegister = (TextView) findViewById((R.id.tvRegister));
         mAuth = FirebaseAuth.getInstance();
@@ -64,16 +66,17 @@ public class LoginActivity extends AppCompatActivity {
     @Override
     protected void onStart(){
         super.onStart();
-
         mAuth.addAuthStateListener(mAuthListner);
+
     }
 
-    private void signIn(){
+    protected void signIn(){
         String email= etUserName.getText().toString();
         String password= etPassword.getText().toString();
-
-        //check if user has not left the Uname and Pass field Blanc
+        checker(email, password);
+        //check if user has not left the Uname and Pass field Blanck.
         if(TextUtils.isEmpty(email) || TextUtils.isEmpty(password)) {
+            Log.w(TAG,"EMAIL of PASSWORD Field is empty");
             Toast.makeText(LoginActivity.this, "Email/ Password Field Empty", Toast.LENGTH_LONG).show();
         }
         else{
@@ -84,10 +87,25 @@ public class LoginActivity extends AppCompatActivity {
                    // progressDialog.dismiss();
                     if (!task.isSuccessful()) {
                         Log.e("ERROR", task.getException().toString());
-                        Toast.makeText(LoginActivity.this, "SignIn Error", Toast.LENGTH_LONG).show();
+                        Toast.makeText(LoginActivity.this, "Error While SignIn", Toast.LENGTH_LONG).show();
                     }
                 }
             });
         }
+    }
+
+    protected boolean checker(String e, String p){
+        String email= e;
+        String password= p;
+
+        if(email.isEmpty() || password.isEmpty()){
+            Log.i(TAG,"EMAIL of PASSWORD Field is empty hence the checker method will fail");
+            return false;
+        }
+        else{
+            Log.i(TAG,"EMAIL of PASSWORD Field is empty hence the checker method will pass");
+            return true;
+        }
+
     }
 }

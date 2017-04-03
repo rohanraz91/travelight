@@ -61,20 +61,44 @@
         android:layout_height="224dp"
         android:layout_weight="0.40" />
 
-    <EditText
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:inputType="textPersonName"
-        android:ems="10"
-        android:id="@+id/etCommand"
-        android:hint="Command" />
+        android:layout_height="match_parent"
+        android:layout_weight="2.64">
 
-    <Button
-        android:text="Command"
-        android:layout_width="130dp"
-        android:layout_height="wrap_content"
-        android:id="@+id/bCommand"
-        android:background="@android:color/holo_blue_light"
-        android:textColor="@android:color/background_light" />
+        <Button
+            android:text="Forward"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bPlay"
+            android:layout_weight="0.08"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentStart="true"
+            android:background="@android:color/holo_blue_light"
+            android:textColor="@android:color/background_light"
+            android:textSize="14sp" />
+
+        <Button
+            android:text="Stop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bStop"
+            android:background="@android:color/holo_blue_light"
+            android:textColor="@android:color/background_light"
+            android:layout_alignParentTop="true"
+            android:layout_centerHorizontal="true" />
+
+        <Button
+            android:text="Reverse"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/bFastForward"
+            android:layout_marginEnd="10dp"
+            android:background="@android:color/holo_blue_light"
+            android:textColor="@android:color/background_light"
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+
+    </RelativeLayout>
 
 </LinearLayout>

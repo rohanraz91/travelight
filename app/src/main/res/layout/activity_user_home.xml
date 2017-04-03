@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:padding="16dp"
     android:orientation="vertical"
-    tools:context="com.example.razdanr.myapplication.UserHome">
+    tools:context="com.example.razdanr.myapplication.UserHomeActivity">
 
     <Button
         android:text="Logout"

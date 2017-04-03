@@ -27,7 +27,7 @@
         </activity>
         <activity android:name=".ControlBLEActivity" />
         <activity android:name=".RegisterActivity" />
-        <activity android:name=".UserHome" />
+        <activity android:name=".UserHomeActivity" />
 
         <service
             android:name=".BluetoothLEService"

@@ -25,7 +25,7 @@ public class RegisterActivityTest extends ActivityInstrumentationTestCase2<Regis
         EditText pass = (EditText)getActivity().findViewById(R.id.etPassword);
         assertNotNull(pass);
         EditText suitcasId = (EditText)getActivity().findViewById(R.id.etSuitcaseID);
-        assertNotNull(pass);
+        assertNotNull(suitcasId);
     }
 
     @SmallTest

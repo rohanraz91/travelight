@@ -29,7 +29,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 
 
-public class UserHome extends AppCompatActivity {
+public class UserHomeActivity extends AppCompatActivity {
     private FirebaseAuth firebaseAuth;
     private BluetoothAdapter bluetoothAdapter;
     private BluetoothLeScanner bluetoothLeScanner;
@@ -42,7 +42,7 @@ public class UserHome extends AppCompatActivity {
     ListAdapter adapterLeScanResult;
     private Handler handler;
     private static final long SCAN_PERIOD = 10000;
-    private final static String TAG = UserHome.class.getSimpleName();
+    private final static String TAG = UserHomeActivity.class.getSimpleName();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -82,17 +82,13 @@ public class UserHome extends AppCompatActivity {
         listView.setOnItemClickListener(scanResultOnItemClickListener);
 
         handler = new Handler();
-
         final Button bLogout = (Button) findViewById((R.id.bLogout));
-
-
-        //final BluetoothManager bluetoothManager = (BluetoothManager) getSystemService(Context.BLUETOOTH_SERVICE);
         firebaseAuth = FirebaseAuth.getInstance();
 
         //If the user has logged out then it will redirect to login Page.
         if (firebaseAuth.getCurrentUser() == null) {
             finish();
-            startActivity(new Intent(UserHome.this, LoginActivity.class));
+            startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
         }
         FirebaseUser user = firebaseAuth.getCurrentUser();
 
@@ -102,12 +98,10 @@ public class UserHome extends AppCompatActivity {
             public void onClick(View v) {
                 firebaseAuth.signOut();
                 finish();
-                startActivity(new Intent(UserHome.this, LoginActivity.class));
+                startActivity(new Intent(UserHomeActivity.this, LoginActivity.class));
 
             }
         });
-
-
     }
 
     //When an item from the list is clicked
@@ -118,7 +112,7 @@ public class UserHome extends AppCompatActivity {
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                     final BluetoothDevice device = (BluetoothDevice) parent.getItemAtPosition(position);
                     if (device == null) return;
-                    final Intent intent = new Intent(UserHome.this, ControlBLEActivity.class);
+                    final Intent intent = new Intent(UserHomeActivity.this, ControlBLEActivity.class);
 
                     //send device bame and address to ControlBLEActivity
                     intent.putExtra(ControlBLEActivity.EXTRAS_DEVICE_NAME, device.getName());
@@ -127,29 +121,6 @@ public class UserHome extends AppCompatActivity {
                 }
             };
 
-    //check usage!!
-    private String getBTDevieType(BluetoothDevice d){
-        String type = "";
-
-        switch (d.getType()){
-            case BluetoothDevice.DEVICE_TYPE_CLASSIC:
-                type = "DEVICE_TYPE_CLASSIC";
-                break;
-            case BluetoothDevice.DEVICE_TYPE_DUAL:
-                type = "DEVICE_TYPE_DUAL";
-                break;
-            case BluetoothDevice.DEVICE_TYPE_LE:
-                type = "DEVICE_TYPE_LE";
-                break;
-            case BluetoothDevice.DEVICE_TYPE_UNKNOWN:
-                type = "DEVICE_TYPE_UNKNOWN";
-                break;
-            default:
-                type = "unknown...";
-        }
-
-        return type;
-    }
     @Override
     protected void onResume() {
         super.onResume();
@@ -163,7 +134,6 @@ public class UserHome extends AppCompatActivity {
         }
     }
 
-    //check usage!!
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
@@ -209,7 +179,7 @@ public class UserHome extends AppCompatActivity {
                     bluetoothLeScanner.stopScan(scanCallback);
                     listView.invalidateViews();
 
-                    Toast.makeText(UserHome.this,
+                    Toast.makeText(UserHomeActivity.this,
                             "Scan timeout",
                             Toast.LENGTH_LONG).show();
 
@@ -251,7 +221,7 @@ public class UserHome extends AppCompatActivity {
         public void onScanFailed(int errorCode) {
             super.onScanFailed(errorCode);
             Log.e("ERROR", errorCode+"-has occured");
-            Toast.makeText(UserHome.this,
+            Toast.makeText(UserHomeActivity.this,
                     "onScanFailed: " + String.valueOf(errorCode),
                     Toast.LENGTH_LONG).show();
         }
@@ -264,5 +234,4 @@ public class UserHome extends AppCompatActivity {
             }
         }
     };
-
 }

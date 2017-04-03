@@ -3,7 +3,6 @@ package com.example.razdanr.myapplication;
 import android.app.Activity;
 import android.app.Instrumentation;
 import android.support.test.rule.ActivityTestRule;
-import android.widget.AdapterView;
 
 import org.junit.After;
 import org.junit.Before;
@@ -16,10 +15,10 @@ import static android.support.test.espresso.action.ViewActions.click;
 import static android.support.test.espresso.matcher.ViewMatchers.withId;
 import static org.junit.Assert.*;
 
-public class UserHomeUnitTest {
+public class UserHomeActivityUnitTest {
     @Rule
-    public ActivityTestRule<UserHome> userActivityTestRule = new ActivityTestRule<UserHome>(UserHome.class);
-    private UserHome userActivity = null;
+    public ActivityTestRule<UserHomeActivity> userActivityTestRule = new ActivityTestRule<UserHomeActivity>(UserHomeActivity.class);
+    private UserHomeActivity userActivity = null;
     Instrumentation.ActivityMonitor monitor = getInstrumentation().addMonitor(LoginActivity.class.getName(), null, false);
     Instrumentation.ActivityMonitor monitorb = getInstrumentation().addMonitor(ControlBLEActivity.class.getName(), null, false);
 

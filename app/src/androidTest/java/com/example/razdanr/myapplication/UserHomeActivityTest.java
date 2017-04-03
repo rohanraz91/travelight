@@ -6,9 +6,9 @@ import android.widget.Button;
 import android.widget.ListView;
 
 
-public class UserHomeTest extends ActivityInstrumentationTestCase2<UserHome> {
-    public UserHomeTest() {
-        super(UserHome.class);
+public class UserHomeActivityTest extends ActivityInstrumentationTestCase2<UserHomeActivity> {
+    public UserHomeActivityTest() {
+        super(UserHomeActivity.class);
     }
 
     @Override

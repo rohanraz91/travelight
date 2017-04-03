@@ -107,7 +107,8 @@ public class BluetoothLEService extends Service {
                                  final BluetoothGattCharacteristic characteristic) {
         final Intent intent = new Intent(action);
 
-        // This is for the Heart Rate Measurement profile.
+        // This is for the Heart Rate Measurement profile. In our case to show that data can be
+        //received from the BLE device (Temperature sensors-could be integrated)
         if (UUID_HEART_RATE_MEASUREMENT.equals(characteristic.getUuid())) {
             int flag = characteristic.getProperties();
             int format = -1;

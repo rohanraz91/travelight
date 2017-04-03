@@ -22,9 +22,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-
 import java.util.ArrayList;
-import java.util.HashMap;
+
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -113,7 +112,7 @@ public class RegisterActivity extends AppCompatActivity {
             Toast.makeText(RegisterActivity.this, "Register Error", Toast.LENGTH_LONG).show();
         }
     }
-
+    //testing the user inputs
     protected boolean registerChecker(String e,String p,String id){
         String email=e;
         String password=p;

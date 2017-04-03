@@ -20,7 +20,6 @@ import android.widget.EditText;
 import android.widget.ExpandableListView;
 import android.widget.SimpleExpandableListAdapter;
 import android.widget.TextView;
-
 import java.nio.charset.Charset;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -40,7 +39,9 @@ public class ControlBLEActivity extends Activity {
     private ExpandableListView gattServicesList;
     private BluetoothLEService bluetoothLEService;
     private EditText etCommand;
-    private Button bCommand;
+    private Button bPlay;
+    private Button bStop;
+    private Button bFastForward;
     //private BluetoothGattCharacteristic gattCharacteristic_send;
     private ArrayList<ArrayList<BluetoothGattCharacteristic>> gattCharacteristics =
             new ArrayList<ArrayList<BluetoothGattCharacteristic>>();
@@ -52,8 +53,6 @@ public class ControlBLEActivity extends Activity {
 
 
     private BluetoothGattCharacteristic characteristic;
-
-
 
     //Service lifecycle Management.
     private final ServiceConnection serviceConnection = new ServiceConnection() {
@@ -139,7 +138,7 @@ public class ControlBLEActivity extends Activity {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.gatt_services_characteristics);
+        setContentView(R.layout.activity_gatt_characteristics);
 
         final Intent intent = getIntent();
         deviceAddress = intent.getStringExtra(EXTRAS_DEVICE_ADDRESS);
@@ -150,13 +149,30 @@ public class ControlBLEActivity extends Activity {
         gattServicesList.setOnChildClickListener(servicesListClickListner);
         connectionState = (TextView) findViewById(R.id.connection_state);
         dataField = (TextView) findViewById(R.id.data_value);
-        etCommand = (EditText) findViewById(R.id.etCommand);
-        bCommand = (Button) findViewById(R.id.bCommand);
+//        etCommand = (EditText) findViewById(R.id.etCommand);
+        bPlay = (Button) findViewById(R.id.bPlay);
+        bStop = (Button) findViewById(R.id.bStop);
+        bFastForward = (Button) findViewById(R.id.bFastForward);
 
-        bCommand.setOnClickListener(new View.OnClickListener() {
+        //Buttons to control the motors
+        bPlay.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String message = etCommand.getText().toString();
+                String message = "Play";
+                sendData(message);
+            }
+        });
+        bStop.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = "Stop";
+                sendData(message);
+            }
+        });
+        bFastForward.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String message = "FastForward";
                 sendData(message);
             }
         });
@@ -230,13 +246,11 @@ public class ControlBLEActivity extends Activity {
         });
     }
 
-
     private void displayData(String data) {
         if (data != null) {
             dataField.setText(data);
         }
     }
-
 
     // Iterate through the supported GATT Services/Characteristics and display on the expandable view.
     private void displayGattServices(List<BluetoothGattService> gattServices) {

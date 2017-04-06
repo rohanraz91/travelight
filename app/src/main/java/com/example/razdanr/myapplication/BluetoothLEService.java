@@ -20,7 +20,7 @@ import java.util.List;
 import java.util.UUID;
 
 
-//connection and  communication with a GATT server hosted on Bluetooth LE device.
+//Connection and  communication with a GATT server hosted on Bluetooth LE device.
 
 public class BluetoothLEService extends Service {
     private final static String TAG = BluetoothLEService.class.getSimpleName();

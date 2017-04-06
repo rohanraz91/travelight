@@ -40,15 +40,14 @@ public class ControlBLEActivityTest extends ActivityInstrumentationTestCase2<Con
     @SmallTest
     public void testButton()
     {
-        Button command = (Button)getActivity().findViewById(R.id.bCommand);
-        assertNotNull(command);
+        Button fastForward = (Button)getActivity().findViewById(R.id.bFastForward);
+        assertNotNull(fastForward);
+        Button stop = (Button)getActivity().findViewById(R.id.bStop);
+        assertNotNull(stop);
+        Button play = (Button)getActivity().findViewById(R.id.bPlay);
+        assertNotNull(play);
     }
-    @SmallTest
-    public void testEditText()
-    {
-        EditText command = (EditText)getActivity().findViewById(R.id.etCommand);
-        assertNotNull(command);
-    }
+
 
     @Override
     protected void tearDown() throws Exception {
